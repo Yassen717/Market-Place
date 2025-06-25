@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# Ignore raw design files
+assets/design/
+
 # next.js
 /.next/
 /out/
