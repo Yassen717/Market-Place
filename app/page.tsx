@@ -1,102 +1,156 @@
 import Image from "next/image";
 
+const featured = [
+  {
+    title: "App of the Day",
+    desc: "Discover today's top pick.",
+    img: "/assets/featured-app-1.png",
+  },
+  {
+    title: "Game of the Day",
+    desc: "Today's most exciting game.",
+    img: "/assets/featured-app-2.png",
+  },
+  {
+    title: "App of the Week",
+    desc: "This week's standout app.",
+    img: "/assets/featured-app-3.png",
+  },
+];
+
+const topCharts = [
+  {
+    name: "Connect",
+    category: "Social Networking",
+    img: "/assets/app-connect.png",
+  },
+  {
+    name: "Capture",
+    category: "Photo & Video",
+    img: "/assets/app-capture.png",
+  },
+  {
+    name: "Listen",
+    category: "Music",
+    img: "/assets/app-listen.png",
+  },
+  {
+    name: "Organize",
+    category: "Productivity",
+    img: "/assets/app-organize.png",
+  },
+  {
+    name: "Move",
+    category: "Health & Fitness",
+    img: "/assets/app-move.png",
+  },
+];
+
+const categories = [
+  "Games", "Business", "Education", "Entertainment", "Finance", "Food & Drink",
+  "Health & Fitness", "Lifestyle", "Medical", "Music", "Navigation", "News",
+  "Photo & Video", "Productivity", "Reference", "Shopping", "Social Networking", "Sports",
+  "Travel", "Utilities"
+];
+
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Header */}
+      <header className="flex items-center justify-between px-8 py-6 border-b">
+        <div className="flex items-center gap-2">
+          <Image src="/logo.svg" alt="App Marketplace" width={32} height={32} />
+          <span className="font-bold text-lg">AppMarketplace</span>
         </div>
+        <div className="flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Search apps..."
+            className="rounded-lg border px-4 py-2 w-64 focus:outline-none focus:ring"
+          />
+          <div className="w-10 h-10 rounded-full overflow-hidden border">
+            <Image src="/avatar.png" alt="User" width={40} height={40} />
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 px-8 py-10 max-w-6xl mx-auto w-full">
+        {/* Featured */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Featured</h2>
+          <div className="flex gap-8 mb-10 flex-col sm:flex-row">
+            {featured.map((item, i) => (
+              <div key={i} className="bg-gray-100 rounded-xl p-4 flex-1 flex flex-col items-center shadow-sm">
+                <div className="w-full h-32 relative mb-4">
+                  <Image src={item.img} alt={item.title} fill className="object-cover rounded-lg" />
+                </div>
+                <div className="font-semibold text-lg mb-1">{item.title}</div>
+                <div className="text-gray-500 text-sm text-center">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Top Charts */}
+        <section className="mb-12">
+          <h2 className="text-xl font-bold mb-4">Top Charts</h2>
+          <div className="flex gap-6 mb-4">
+            <button className="text-gray-800 font-semibold border-b-2 border-black pb-1">Apps</button>
+            <button className="text-gray-400 font-semibold">Games</button>
+          </div>
+          <ul className="space-y-4">
+            {topCharts.map((app, i) => (
+              <li key={i} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg shadow-sm">
+                <div className="w-12 h-12 relative">
+                  <Image src={app.img} alt={app.name} fill className="object-cover rounded-lg" />
+                </div>
+                <div className="flex-1">
+                  <div className="font-semibold">{app.name}</div>
+                  <div className="text-gray-500 text-xs">{app.category}</div>
+                </div>
+                <button className="ml-auto bg-gray-200 text-gray-700 px-4 py-1 rounded-full font-semibold text-sm">GET</button>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Browse Categories */}
+        <section>
+          <h2 className="text-xl font-bold mb-4">Browse Categories</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
+            {categories.map((cat, i) => (
+              <div key={i} className="bg-gray-100 rounded-xl flex flex-col items-center justify-center p-6 shadow-sm">
+                <div className="w-12 h-12 mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
+                  {/* Placeholder for category icon */}
+                  <span className="text-2xl">🏷️</span>
+                </div>
+                <div className="text-sm font-medium text-center">{cat}</div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t py-8 px-8 mt-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div>
+            <div className="font-bold text-lg mb-1">AppMarketplace</div>
+            <div className="text-gray-500 text-sm">Discover your next favorite app.</div>
+          </div>
+          <div className="flex gap-8 text-sm">
+            <a href="#" className="hover:underline">About Us</a>
+            <a href="#" className="hover:underline">Contact</a>
+            <a href="#" className="hover:underline">Privacy Policy</a>
+            <a href="#" className="hover:underline">Terms of Service</a>
+          </div>
+          <div className="flex gap-4">
+            <a href="#" aria-label="Facebook"><span>🔵</span></a>
+            <a href="#" aria-label="Twitter"><span>🐦</span></a>
+            <a href="#" aria-label="Website"><span>🌐</span></a>
+          </div>
+        </div>
+        <div className="text-center text-xs text-gray-400 mt-4">© 2024 App Marketplace. All rights reserved.</div>
       </footer>
     </div>
   );
