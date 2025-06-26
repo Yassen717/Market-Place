@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# App Marketplace
+
+A modern marketplace for discovering and downloading apps, built with Next.js and Tailwind CSS.
+
+## Features
+- **Home Screen**: 
+  - Header with search bar and user avatar
+  - Featured section (App of the Day, Game of the Day, App of the Week)
+  - Top Charts (Apps/Games tabs, app list with GET buttons)
+  - Browse Categories (grid of app categories)
+  - Footer with links and social icons
+- Responsive, clean UI inspired by leading app stores
 
 ## Getting Started
 
@@ -16,9 +27,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the Home screen by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Image Assets
+Add the following images to your `public/` or `public/assets/` directory as needed:
+- `/logo.svg` (App Marketplace logo)
+- `/avatar.png` (User avatar)
+- `/assets/featured-app-1.png`, `/assets/featured-app-2.png`, `/assets/featured-app-3.png` (Featured section)
+- `/assets/app-connect.png`, `/assets/app-capture.png`, etc. (Top charts)
+
+You can use your own images or download placeholders.
 
 ## Learn More
 
