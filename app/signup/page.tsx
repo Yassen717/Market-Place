@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, getIdToken } from "firebase/auth";
 import { auth } from "../../firebase/auth";
 
 export default function SignupPage() {
@@ -20,6 +20,13 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
+      if (!auth.currentUser) {
+        setError("Signup failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+      const token = await getIdToken(auth.currentUser, true);
+      document.cookie = `firebaseToken=${token}; path=/;`;
       router.push("/login");
     } catch (err: any) {
       setError(err.message);

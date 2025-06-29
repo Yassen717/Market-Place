@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/auth";
+import { getIdToken } from "firebase/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,13 @@ export default function LoginPage() {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      if (!auth.currentUser) {
+        setError("Authentication failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+      const token = await getIdToken(auth.currentUser, true);
+      document.cookie = `firebaseToken=${token}; path=/;`;
       router.push("/");
     } catch (err: any) {
       setError(err.message);
