@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import Link from "next/link";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -8,16 +10,17 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Placeholder for Firebase login logic
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    // TODO: Add Firebase login logic here
-    setTimeout(() => {
-      setLoading(false);
-      // setError("Invalid credentials");
-    }, 1000);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // Optionally redirect or show success
+    } catch (err: any) {
+      setError(err.message);
+    }
+    setLoading(false);
   };
 
   return (
