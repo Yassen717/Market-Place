@@ -84,23 +84,17 @@ export default function Home() {
           <Image src="/logo.svg" alt="App Marketplace" width={32} height={32} />
           <span className="font-bold text-lg text-black">AppMarketplace</span>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="relative w-72">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#A0AEC0" strokeWidth="2"/><path d="M20 20L17 17" stroke="#A0AEC0" strokeWidth="2" strokeLinecap="round"/></svg>
-            </span>
-            <input
-              type="text"
-              placeholder="Search apps..."
-              className="rounded-lg border text-black border-gray-200 bg-[#f5f6fa] pl-10 pr-4 py-2 w-full focus:outline-none focus:ring focus:border-blue-200 transition"
-            />
+        <nav className="flex gap-6 text-base font-medium">
+          <Link href="/" className="text-blue-600">Today</Link>
+          <Link href="/games" className="hover:text-blue-600 transition">Games</Link>
+          <Link href="/apps" className="hover:text-blue-600 transition">Apps</Link>
+          <Link href="/search" className="hover:text-blue-600 transition">Search</Link>
+        </nav>
+        <Link href="/profile">
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
+            <Image src="/avatar.png" alt="User" width={40} height={40} />
           </div>
-          <Link href="/profile">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
-              <Image src="/avatar.png" alt="User" width={40} height={40} />
-            </div>
-          </Link>
-        </div>
+        </Link>
       </header>
 
       <main className="flex-1 px-8 py-10 max-w-6xl mx-auto w-full">
