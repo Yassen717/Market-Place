@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Header from "../components/Header";
 
 const featured = [
   {
@@ -78,29 +79,12 @@ const categories = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#fafbfc] flex flex-col">
-      {/* Header */}
-      <header className="flex items-center justify-between px-8 py-5 border-b bg-white shadow-sm rounded-b-xl sticky top-0 z-20">
-        <div className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="App Marketplace" width={32} height={32} />
-          <span className="font-bold text-lg text-black">AppMarketplace</span>
-        </div>
-        <nav className="flex gap-6 text-base font-medium">
-          <Link href="/" className="text-blue-600">Today</Link>
-          <Link href="/games" className="hover:text-blue-600 transition">Games</Link>
-          <Link href="/apps" className="hover:text-blue-600 transition">Apps</Link>
-          <Link href="/search" className="hover:text-blue-600 transition">Search</Link>
-        </nav>
-        <Link href="/profile">
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
-            <Image src="/avatar.png" alt="User" width={40} height={40} />
-          </div>
-        </Link>
-      </header>
+      <Header />
 
       <main className="flex-1 px-8 py-10 max-w-6xl mx-auto w-full">
         {/* Featured */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Featured</h2>
+          <h2 className="text-2xl text-black font-bold mb-4">Featured</h2>
           <div className="flex gap-8 mb-10 flex-col sm:flex-row">
             {featured.map((item, i) => (
               <div key={i} className="bg-white rounded-xl p-4 flex-1 flex flex-col items-center shadow-md border border-gray-100">
@@ -116,7 +100,7 @@ export default function Home() {
 
         {/* Top Charts */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold mb-4">Top Charts</h2>
+          <h2 className="text-xl text-black font-bold mb-4">Top Charts</h2>
           <div className="flex gap-6 mb-4">
             <button className="text-gray-800 font-semibold border-b-2 border-black pb-1 bg-transparent hover:text-black transition-colors">Apps</button>
             <button className="text-gray-400 font-semibold bg-transparent hover:text-gray-600 hover:border-b-2 hover:border-gray-300 pb-1 transition-colors">Games</button>
@@ -139,7 +123,7 @@ export default function Home() {
 
         {/* Browse Categories */}
         <section>
-          <h2 className="text-xl font-bold mb-4">Browse Categories</h2>
+          <h2 className="text-xl text-black font-bold mb-4">Browse Categories</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
             {categories.map((cat, i) => (
               <div key={i} className={`${cat.color} rounded-xl flex flex-col items-center justify-center p-6 shadow border border-gray-100`}>
@@ -157,14 +141,14 @@ export default function Home() {
       <footer className="bg-[#f5f6fa] border-t py-8 px-8 mt-12">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
-            <div className="font-bold text-lg mb-1">AppMarketplace</div>
+            <div className="font-bold text-lg text-black mb-1">AppMarketplace</div>
             <div className="text-gray-500 text-sm">Discover your next favorite app.</div>
           </div>
           <div className="flex gap-8 text-sm">
-            <a href="#" className="hover:underline">About Us</a>
-            <a href="#" className="hover:underline">Contact</a>
-            <a href="#" className="hover:underline">Privacy Policy</a>
-            <a href="#" className="hover:underline">Terms of Service</a>
+            <a href="#" className="hover:underline text-black">About Us</a>
+            <a href="#" className="hover:underline text-black">Contact</a>
+            <a href="#" className="hover:underline text-black">Privacy Policy</a>
+            <a href="#" className="hover:underline text-black">Terms of Service</a>
           </div>
           <div className="flex gap-4">
             <a href="#" aria-label="Facebook"><span className="text-gray-400"><svg width="20" height="20" fill="currentColor"><circle cx="10" cy="10" r="10" /></svg></span></a>
