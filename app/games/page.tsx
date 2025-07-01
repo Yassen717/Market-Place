@@ -45,7 +45,7 @@ export default function GamesPage() {
             <input
               type="text"
               placeholder="Search games..."
-              className="rounded-lg border text-black border-gray-200 bg-[#f5f6fa] pl-10 pr-4 py-2 w-full focus:outline-none focus:ring focus:border-blue-200 transition"
+              className="rounded-lg border text-black border-gray-200 bg-white pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300 transition-colors"
             />
           </div>
           <Link href="/profile">
@@ -67,7 +67,7 @@ export default function GamesPage() {
                 <div className="font-medium text-gray-800 text-base">{game.name}</div>
                 <div className="text-gray-400 text-xs mt-0.5">{game.category}</div>
               </div>
-              <button className="ml-auto bg-[#f5f6fa] text-gray-400 px-5 py-1.5 rounded-full font-semibold text-sm border border-gray-200 shadow-none">GET</button>
+              <button className="ml-auto bg-black hover:bg-gray-800 text-white px-5 py-1.5 rounded-full font-semibold text-sm border border-gray-200 shadow-sm transition-colors">GET</button>
             </li>
           ))}
         </ul>

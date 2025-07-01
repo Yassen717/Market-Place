@@ -118,8 +118,8 @@ export default function Home() {
         <section className="mb-12">
           <h2 className="text-xl font-bold mb-4">Top Charts</h2>
           <div className="flex gap-6 mb-4">
-            <button className="text-gray-800 font-semibold border-b-2 border-black pb-1 bg-transparent">Apps</button>
-            <button className="text-gray-400 font-semibold bg-transparent">Games</button>
+            <button className="text-gray-800 font-semibold border-b-2 border-black pb-1 bg-transparent hover:text-black transition-colors">Apps</button>
+            <button className="text-gray-400 font-semibold bg-transparent hover:text-gray-600 hover:border-b-2 hover:border-gray-300 pb-1 transition-colors">Games</button>
           </div>
           <ul className="space-y-3">
             {topCharts.map((app, i) => (
@@ -131,7 +131,7 @@ export default function Home() {
                   <div className="font-medium text-gray-800 text-base">{app.name}</div>
                   <div className="text-gray-400 text-xs mt-0.5">{app.category}</div>
                 </div>
-                <button className="ml-auto bg-[#f5f6fa] text-gray-400 px-5 py-1.5 rounded-full font-semibold text-sm border border-gray-200 shadow-none">GET</button>
+                <button className="ml-auto bg-black hover:bg-gray-800 text-white px-5 py-1.5 rounded-full font-semibold text-sm border border-gray-200 shadow-sm transition-colors">GET</button>
               </li>
             ))}
           </ul>

@@ -18,7 +18,7 @@ export default function ProfilePage() {
             <input
               type="text"
               placeholder="Search apps..."
-              className="rounded-lg border text-black border-gray-200 bg-[#f5f6fa] pl-10 pr-4 py-2 w-full focus:outline-none focus:ring focus:border-blue-200 transition"
+              className="rounded-lg border text-black border-gray-200 bg-white pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300 transition-colors"
             />
           </div>
           <Link href="/profile">
@@ -57,13 +57,13 @@ export default function ProfilePage() {
                     </button>
                   </li>
                   <li>
-                    <button className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                    <button className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-black transition-colors">
                       <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M6 6h15M6 12h15M6 18h15M3 6h.01M3 12h.01M3 18h.01" stroke="#64748b" strokeWidth="2"/></svg>
                       App Purchases
                     </button>
                   </li>
                   <li>
-                    <button className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                    <button className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-black transition-colors">
                       <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#64748b" strokeWidth="2"/><path d="M12 8v4l2 2" stroke="#64748b" strokeWidth="2"/></svg>
                       Settings
                     </button>

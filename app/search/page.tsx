@@ -39,7 +39,7 @@ export default function SearchPage() {
           <input
             type="text"
             placeholder="Search apps, games..."
-            className="w-full rounded-lg border border-gray-200 bg-[#f5f6fa] px-5 py-3 text-lg focus:outline-none focus:ring"
+            className="w-full rounded-lg border border-gray-200 bg-white px-5 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300 transition-colors"
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
