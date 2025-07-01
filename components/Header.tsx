@@ -2,6 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { auth } from "../firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -17,6 +20,14 @@ export default function Header({
   searchValue = ""
 }: HeaderProps) {
   const pathname = usePathname();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const isActive = (path: string) => {
     if (path === "/" && pathname === "/") return true;
@@ -56,7 +67,7 @@ export default function Header({
         </div>
       ) : (
         <>
-          <nav className="flex gap-6 text-base font-medium">
+          <nav className="flex gap-6 text-base font-medium items-center">
             <Link 
               href="/" 
               className={`transition ${isActive("/") ? "text-blue-600" : "hover:text-blue-600"}`}
@@ -81,6 +92,14 @@ export default function Header({
             >
               Search
             </Link>
+            {user && (
+              <Link 
+                href="/upload" 
+                className={`transition ${isActive("/upload") ? "text-blue-600" : "hover:text-blue-600"}`}
+              >
+                Upload
+              </Link>
+            )}
           </nav>
           <Link href="/profile">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
