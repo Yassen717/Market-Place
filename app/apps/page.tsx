@@ -32,8 +32,8 @@ const apps = [
 
 export default function AppsPage() {
   return (
-    <div className="min-h-screen bg-[#fafbfc] flex flex-col">
-      <Header showSearch searchPlaceholder="Search apps..." />
+    <div className="min-h-screen text-black bg-[#fafbfc] flex flex-col">
+      <Header />
       <main className="flex-1 px-8 py-10 max-w-4xl mx-auto w-full">
         <h2 className="text-2xl text-black font-bold mb-6">Top Apps</h2>
         <ul className="space-y-4">

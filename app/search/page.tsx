@@ -17,7 +17,7 @@ export default function SearchPage() {
   const filtered = results.filter(r => r.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] flex flex-col">
+    <div className="min-h-screen text-black bg-[#fafbfc] flex flex-col">
       <Header />
       <main className="flex-1 px-8 py-10 max-w-4xl mx-auto w-full">
         <div className="mb-8">

@@ -78,7 +78,7 @@ const categories = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#fafbfc] flex flex-col">
+    <div className="min-h-screen text-black bg-[#fafbfc] flex flex-col">
       <Header />
 
       <main className="flex-1 px-8 py-10 max-w-6xl mx-auto w-full">
