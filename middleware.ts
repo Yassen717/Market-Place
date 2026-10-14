@@ -1,30 +1,26 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
+/**
+ * The marketplace itself is public — browsing, search and app details
+ * need no account. Only member pages are gated. The cookie is a
+ * presence signal set at login; Firebase auth state is authoritative
+ * on the client.
+ */
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  // You may need to adjust the cookie name depending on your Firebase setup
-  const token = request.cookies.get('__session')?.value || request.cookies.get('firebaseToken')?.value;
+  const token =
+    request.cookies.get("__session")?.value ||
+    request.cookies.get("firebaseToken")?.value;
 
-  // Allow access to login and signup pages without authentication
-  if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
-    if (token) {
-      // If already authenticated, redirect to home
-      return NextResponse.redirect(new URL('/', request.url));
-    }
-    return NextResponse.next();
-  }
-
-  // For all other pages, require authentication
   if (!token) {
-    // Redirect to signup (or login)
-    return NextResponse.redirect(new URL('/signup', request.url));
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("next", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // If authenticated, allow access
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next|favicon.ico|public|assets|api).*)'],
-}; 
+  matcher: ["/upload/:path*", "/profile/:path*"],
+};

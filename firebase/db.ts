@@ -1,8 +1,11 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { firebaseConfig } from './config';
+import { getFirestore, type Firestore } from "firebase/firestore";
+import { getFirebaseApp } from "./app";
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+let dbInstance: Firestore | null = null;
 
-// TODO: Add Firebase database logic here 
+export function getDb(): Firestore | null {
+  const app = getFirebaseApp();
+  if (!app) return null;
+  if (!dbInstance) dbInstance = getFirestore(app);
+  return dbInstance;
+}

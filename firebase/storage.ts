@@ -1,8 +1,11 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getStorage } from 'firebase/storage';
-import { firebaseConfig } from './config';
+import { getStorage, type FirebaseStorage } from "firebase/storage";
+import { getFirebaseApp } from "./app";
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+let storageInstance: FirebaseStorage | null = null;
 
-// TODO: Add Firebase storage logic here 
+export function getStorageBucket(): FirebaseStorage | null {
+  const app = getFirebaseApp();
+  if (!app) return null;
+  if (!storageInstance) storageInstance = getStorage(app);
+  return storageInstance;
+}
