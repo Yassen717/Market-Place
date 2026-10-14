@@ -1,113 +1,184 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { auth } from "../firebase/auth";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { signOutUser, useAuthUser } from "@/firebase/auth";
+import { cn } from "@/lib/helpers";
+import Logo from "./Logo";
 
-interface HeaderProps {
-  showSearch?: boolean;
-  searchPlaceholder?: string;
-  onSearchChange?: (value: string) => void;
-  searchValue?: string;
-}
+const NAV = [
+  { href: "/", label: "Today" },
+  { href: "/games", label: "Games" },
+  { href: "/apps", label: "Apps" },
+  { href: "/search", label: "Search" },
+];
 
-export default function Header({ 
-  showSearch = false, 
-  searchPlaceholder = "Search...",
-  onSearchChange,
-  searchValue = ""
-}: HeaderProps) {
+export default function Header() {
   const pathname = usePathname();
-  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const { user, loading } = useAuthUser();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-    });
-    return () => unsubscribe();
+    const close = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  const isActive = (path: string) => {
-    if (path === "/" && pathname === "/") return true;
-    if (path !== "/" && pathname.startsWith(path)) return true;
-    return false;
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const handleSignOut = async () => {
+    setMenuOpen(false);
+    await signOutUser();
+    router.push("/");
+    router.refresh();
   };
 
   return (
-    <header className="flex items-center justify-between px-8 py-5 border-b bg-white shadow-sm rounded-b-xl sticky top-0 z-20">
-      <div className="flex items-center gap-2">
-        <Image src="/logo.svg" alt="App Marketplace" width={32} height={32} />
-        <span className="font-bold text-lg text-black">AppMarketplace</span>
-      </div>
-      
-      {showSearch ? (
-        <div className="flex items-center gap-4">
-          <div className="relative w-72">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="7" stroke="#A0AEC0" strokeWidth="2"/>
-                <path d="M20 20L17 17" stroke="#A0AEC0" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </span>
-            <input
-              type="text"
-              placeholder={searchPlaceholder}
-              className="rounded-lg border text-black border-gray-200 bg-white pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300 transition-colors"
-              value={searchValue}
-              onChange={e => onSearchChange?.(e.target.value)}
-            />
-          </div>
-          <Link href="/profile">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
-              <Image src="/avatar.png" alt="User" width={40} height={40} />
-            </div>
+    <header className="sticky top-0 z-40 border-b border-border bg-[rgba(7,8,13,0.72)] backdrop-blur-xl">
+      <div className="page-shell flex items-center justify-between py-3.5">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <Logo />
+          <span className="font-display font-bold text-lg tracking-tight">
+            Nova<span className="text-gradient">Market</span>
+          </span>
+        </Link>
+
+        <nav className="hidden sm:flex items-center gap-1">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors",
+                isActive(item.href)
+                  ? "bg-surface-2 text-text"
+                  : "text-muted hover:text-text",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+          {user && (
+            <Link
+              href="/upload"
+              className={cn(
+                "px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors",
+                isActive("/upload")
+                  ? "bg-surface-2 text-text"
+                  : "text-muted hover:text-text",
+              )}
+            >
+              Upload
+            </Link>
+          )}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/search"
+            aria-label="Search"
+            className="sm:hidden text-muted hover:text-text transition-colors"
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+              <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
           </Link>
-        </div>
-      ) : (
-        <>
-          <nav className="flex gap-6 text-base font-medium items-center">
-            <Link 
-              href="/" 
-              className={`transition ${isActive("/") ? "text-blue-600" : "hover:text-blue-600"}`}
-            >
-              Today
-            </Link>
-            <Link 
-              href="/games" 
-              className={`transition ${isActive("/games") ? "text-blue-600" : "hover:text-blue-600"}`}
-            >
-              Games
-            </Link>
-            <Link 
-              href="/apps" 
-              className={`transition ${isActive("/apps") ? "text-blue-600" : "hover:text-blue-600"}`}
-            >
-              Apps
-            </Link>
-            <Link 
-              href="/search" 
-              className={`transition ${isActive("/search") ? "text-blue-600" : "hover:text-blue-600"}`}
-            >
-              Search
-            </Link>
-            {user && (
-              <Link 
-                href="/upload" 
-                className={`transition ${isActive("/upload") ? "text-blue-600" : "hover:text-blue-600"}`}
+
+          {loading ? (
+            <div className="w-9 h-9 rounded-full bg-surface-2 animate-pulse" />
+          ) : user ? (
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen((o) => !o)}
+                className="w-9 h-9 rounded-full flex items-center justify-center font-display font-bold text-sm text-white bg-gradient-to-br from-accent to-accent-2 border border-border-strong cursor-pointer"
+                aria-label="Account menu"
               >
-                Upload
-              </Link>
-            )}
-          </nav>
-          <Link href="/profile">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-shadow shadow-sm cursor-pointer">
-              <Image src="/avatar.png" alt="User" width={40} height={40} />
+                {(user.displayName || user.email || "U").charAt(0).toUpperCase()}
+              </button>
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-52 glass-solid rounded-xl p-1.5 shadow-2xl shadow-black/50 animate-rise">
+                  <div className="px-3 py-2 border-b border-border mb-1">
+                    <div className="text-sm font-semibold truncate">
+                      {user.displayName || "Member"}
+                    </div>
+                    <div className="text-xs text-muted truncate">
+                      {user.email}
+                    </div>
+                  </div>
+                  <Link
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-3 py-2 text-sm rounded-lg text-muted hover:text-text hover:bg-surface-2 transition-colors"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/profile/app-purchases"
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-3 py-2 text-sm rounded-lg text-muted hover:text-text hover:bg-surface-2 transition-colors"
+                  >
+                    Purchases
+                  </Link>
+                  <Link
+                    href="/profile/settings"
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-3 py-2 text-sm rounded-lg text-muted hover:text-text hover:bg-surface-2 transition-colors"
+                  >
+                    Settings
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-3 py-2 text-sm rounded-lg text-bad hover:bg-surface-2 transition-colors cursor-pointer"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
+          ) : (
+            <Link href="/login" className="btn-ghost !py-1.5">
+              Sign in
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <nav className="sm:hidden page-shell flex gap-1 pb-2.5 overflow-x-auto">
+        {NAV.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap",
+              isActive(item.href)
+                ? "bg-surface-2 text-text"
+                : "text-muted",
+            )}
+          >
+            {item.label}
           </Link>
-        </>
-      )}
+        ))}
+        {user && (
+          <Link
+            href="/upload"
+            className={cn(
+              "px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap",
+              isActive("/upload") ? "bg-surface-2 text-text" : "text-muted",
+            )}
+          >
+            Upload
+          </Link>
+        )}
+      </nav>
     </header>
   );
-} 
+}
